@@ -1,0 +1,49 @@
+body {
+    background-image: url('../img/iPhone 14 & 15 Pro Max - 1.png');
+    background-size: 428px 926px; /* Dimensiones del iPhone 14 Pro Max */
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif; /* Ejemplo de fuente para el texto */
+    color: #ffffff; /* Ejemplo de color de texto */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alineación al inicio verticalmente */
+    height: 100vh;
+    margin: 0;
+    text-align: center; /* Alineación del contenido central */
+}
+
+.container {
+    margin-top: 500px; /* Ajusta este valor para posicionar el contenido más abajo */
+    text-align: center;
+ 
+}
+
+.welcome-message {
+    font-size: 3em; /* Tamaño del texto más grande */
+    font-weight: bold; /* Texto en negrita */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra del texto */
+}
+
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #850b0b; /* Ejemplo de color de fondo del botón */
+    color: #fff; /* Ejemplo de color de texto del botón */
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #790f0f; /* Cambio de color al pasar el mouse */
+}
+@supports (-webkit-text-stroke: 3px black) {
+    h1 {
+      -webkit-text-fill-color: white;
+      -webkit-text-stroke: 3px black;
+    }
+  }

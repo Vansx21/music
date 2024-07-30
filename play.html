@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduciendo Canción</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-arrow">&#8592;</a>
+        <div class="album-cover">
+            <img id="album-cover-img" src="img/MICHAELITO.jpg" alt="Carátula del álbum">
+        </div>
+
+
+        <div class="barradeprogreso" id="barradeprogreso">
+            <div class="selector" id="selector"></div>
+        </div>
+
+
+        <h1 id="song-title">n</h1>
+        <audio id="audio-player" controls autoplay style="display:none;"></audio>
+        
+        <div class="controls">
+            <button id="prev" class="control-button">❮</button>
+            <button id="play-pause" class="control-button">❚❚</button>
+            <button id="next" class="control-button">❯</button>
+        </div>
+        
+        <a href="playlist.html" class="button">Playlist</a>
+    </div>
+    <script>
+        const songs = [
+            {title: "Michael Jackson - Billie Jean ", src: "./audio/Michael Jackson - Billie Jean (Official Video).mp3", cover: "img/BILLIE.jpeg"},
+            {title: "The Weeknd - Save Your Tears (Official Music Video)", src: "./audio/The Weeknd - Save Your Tears (Official Music Video).mp3", cover: "img/SAVE.jpeg"},
+            {title: "Blessd, Ovy On The Drums - Mírame", src: "./audio/Blessd, Ovy On The Drums - Mírame.mp3", cover: "img/MIRAME.jpeg"},
+            {title: "Kiss - I Was Made For Lovin You", src: "./audio/Kiss - I Was Made For Lovin You.mp3", cover: "img/KISS.jpeg"},
+            {title: "Romeo Santos - Que Se Mueran (Letra)", src: "./audio/Romeo Santos - Que Se Mueran (Letra).mp3", cover: "img/ROMEO.jpeg"},
+            {title: "Virgen - Adolescentes Letra", src: "./audio/Virgen - Adolescentes Letra.mp3", cover: "img/virgin.jpeg"},
+            {title: "Eminem - Lose Yourself [HD]", src: "./audio/Eminem - Lose Yourself [HD].mp3", cover: "img/eminem.jpeg"},
+            {title: "Nada - Dread Mar-I (letralyrics)", src: "./audio/Nada - Dread Mar-I (letralyrics).mp3", cover: "img/NADA.jpeg"}
+           
+        ];
+
+        let currentSongIndex = 0;
+        const audioPlayer = document.getElementById('audio-player');
+        const songTitle = document.getElementById('song-title');
+        const albumCoverImg = document.getElementById('album-cover-img');
+        const medidortiempo = document.getElementById('selector');
+
+        function loadSong(songIndex) {
+            const song = songs[songIndex];
+            audioPlayer.src = song.src;
+            songTitle.textContent = ` ${song.title}`;
+            albumCoverImg.src = song.cover;
+        }
+
+        function playPauseSong() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                document.getElementById('play-pause').textContent = '❚❚';
+            } else {
+                audioPlayer.pause();
+                document.getElementById('play-pause').textContent = '▶️';
+            }
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+            audioPlayer.play();
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+            audioPlayer.play();
+        }
+
+        function getSongIndexFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get('song')) || 0;
+        }
+
+        function updatebarprogress(e) {
+            const { duration, currentTime } = e.target;
+            if (duration > 0) { // Verifica que la duración sea válida
+                const porcentajeProgreso = (currentTime / duration) * 100;
+                medidortiempo.style.left = `${porcentajeProgreso}%`;
+            }
+        }
+
+        document.getElementById('play-pause').addEventListener('click', playPauseSong);
+        document.getElementById('next').addEventListener('click', nextSong);
+        document.getElementById('prev').addEventListener('click', prevSong);
+        audioPlayer.addEventListener('ended', nextSong);
+
+        // Load the song based on the URL parameter
+        currentSongIndex = getSongIndexFromUrl();
+        loadSong(currentSongIndex);
+
+
+        audioPlayer.addEventListener('timeupdate',updatebarprogress);
+
+    </script>
+</body>
+</html>
+
+
